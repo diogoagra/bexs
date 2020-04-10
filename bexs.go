@@ -51,12 +51,11 @@ func New(exchange, apikey, apisecret string, debug bool) *Bexs {
 
 // GetURL -
 func (c *Bexs) GetURL(endpoint string, private bool) (response []byte, err error) {
-	c.Lock.Lock()
-	defer c.Lock.Unlock()
-
 	var uri, apisign string
 
 	if private {
+		c.Lock.Lock()
+		defer c.Lock.Unlock()
 		uri = fmt.Sprintf("%s%s&apikey=%s&nonce=%s", exchanges[c.Exchange], endpoint, c.APIKey, strconv.Itoa(int(time.Now().UnixNano())))
 		apisignhmac512 := hmac.New(sha512.New, []byte(c.APISecret))
 		apisignhmac512.Write([]byte(uri))
