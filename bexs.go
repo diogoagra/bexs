@@ -3,7 +3,6 @@ package bexs
 import (
 	"crypto/hmac"
 	"crypto/sha512"
-	"crypto/tls"
 	"encoding/hex"
 	"encoding/json"
 	"errors"
@@ -58,7 +57,10 @@ func (c *Bexs) GetURL(endpoint string, private bool) (response []byte, err error
 		defer c.Lock.Unlock()
 		uri = fmt.Sprintf("%s%s&apikey=%s&nonce=%s", exchanges[c.Exchange], endpoint, c.APIKey, strconv.Itoa(int(time.Now().UnixNano())))
 		apisignhmac512 := hmac.New(sha512.New, []byte(c.APISecret))
-		apisignhmac512.Write([]byte(uri))
+		_, err = apisignhmac512.Write([]byte(uri))
+		if err != nil {
+			return
+		}
 		apisign = hex.EncodeToString(apisignhmac512.Sum(nil))
 	} else {
 		uri = exchanges[c.Exchange] + endpoint
@@ -67,8 +69,6 @@ func (c *Bexs) GetURL(endpoint string, private bool) (response []byte, err error
 	if c.Debug {
 		log.Println("[debug] request:", uri)
 	}
-
-	http.DefaultTransport.(*http.Transport).TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
 
 	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
