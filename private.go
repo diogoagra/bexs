@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"net/url"
 )
 
 // Config -
@@ -383,7 +384,12 @@ func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int) 
 		err = fmt.Errorf("Invalid input asset %s to %s quantity %f exchange %v", asset, to, quantity, exchange)
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/directtransfer?"+fmt.Sprintf("asset=%s&accountto=%s&quantity=%.8f&exchangeto=%v", asset, to, quantity, exchange), true)
+
+	params := make(url.Values)
+	params.Add("accountto", to)
+	toEncoded := params.Encode()
+
+	response, err := c.GetURL("/api/v3/private/directtransfer?"+fmt.Sprintf("asset=%s&accountto=%s&quantity=%.8f&exchangeto=%v", asset, toEncoded, quantity, exchange), true)
 	if err != nil {
 		return
 	}
