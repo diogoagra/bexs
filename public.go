@@ -61,7 +61,7 @@ func (c *Bexs) GetTicker(market string) (result []GetTickerStruct, err error) {
 }
 
 // GetMarketSummary -
-func (c *Bexs) GetMarketSummary(market string) (result []GetMarketSummarieStruct, err error) {
+func (c *Bexs) GetMarketSummary(market string) (result GetMarketSummarieStruct, err error) {
 	if market == "" {
 		err = fmt.Errorf("Invalid input empty market")
 		return

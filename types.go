@@ -133,7 +133,7 @@ type GetMarketSummarieStruct struct {
 	BaseVolume      decimal.Decimal `json:"BaseVolume"`
 	Bid             decimal.Decimal `json:"Bid"`
 	Ask             decimal.Decimal `json:"Ask"`
-	IsActive        string          `json:"IsActive"`
+	IsActive        bool            `json:"IsActive"`
 	InfoMessage     string          `json:"InfoMessage"`
 	MarketCurrency  string          `json:"MarketCurrency"`
 	BaseCurrency    string          `json:"BaseCurrency"`
