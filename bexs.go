@@ -11,7 +11,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strconv"
+	"net/url"
 	"sync"
 	"time"
 )
@@ -57,7 +57,12 @@ func (c *Bexs) getURL(endpoint string, private bool) (response []byte, err error
 	if private {
 		c.Lock.Lock()
 		defer c.Lock.Unlock()
-		uri = fmt.Sprintf("%s%s&apikey=%s&nonce=%s", exchanges[c.Exchange], endpoint, c.APIKey, strconv.Itoa(int(time.Now().UnixNano())))
+
+		params := make(url.Values)
+		params.Add("apikey", c.APIKey)
+		params.Add("nonce", fmt.Sprintf("%d", time.Now().UnixNano()))
+
+		uri = fmt.Sprintf("%s%s&%s", exchanges[c.Exchange], endpoint, params.Encode())
 		apisignhmac512 := hmac.New(sha512.New, []byte(c.APISecret))
 		apisignhmac512.Write([]byte(uri))
 		apisign = hex.EncodeToString(apisignhmac512.Sum(nil))

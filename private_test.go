@@ -37,12 +37,12 @@ func TestBexs_SellMarket(t *testing.T) {
 }
 
 func TestBexs_BuyLimit(t *testing.T) {
-	_, err := privateTest.BuyLimit("BTC_USDT", 10000, 1)
+	_, err := privateTest.BuyLimit("BTC_USDT", 12000, 1)
 	assert.NoError(t, err)
 }
 
 func TestBexs_SellLimit(t *testing.T) {
-	_, err := privateTest.SellLimit("BTC_USDT", 10000, 1)
+	_, err := privateTest.SellLimit("BTC_USDT", 11000, 1)
 	assert.NoError(t, err)
 }
 
