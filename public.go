@@ -3,15 +3,16 @@ package bexs
 import (
 	"encoding/json"
 	"fmt"
+	"net/url"
 )
 
 // GetAssets -
 func (c *Bexs) GetAssets() (result []GetAssetsStruct, err error) {
-	response, err := c.GetURL("/api/v3/public/getassets?", false)
+	response, err := c.getURL("/api/v3/public/getassets?", false)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -24,11 +25,11 @@ func (c *Bexs) GetAssets() (result []GetAssetsStruct, err error) {
 
 // GetMarkets -
 func (c *Bexs) GetMarkets() (result []GetMarketsStruct, err error) {
-	response, err := c.GetURL("/api/v3/public/getmarkets?", false)
+	response, err := c.getURL("/api/v3/public/getmarkets?", false)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -45,11 +46,15 @@ func (c *Bexs) GetTicker(market string) (result []GetTickerStruct, err error) {
 		err = fmt.Errorf("Invalid input empty market")
 		return
 	}
-	response, err := c.GetURL("/api/v3/public/getticker?"+fmt.Sprintf("market=%s", market), false)
+
+	params := make(url.Values)
+	params.Add("market", market)
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/public/getticker?%s", params.Encode()), false)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -66,11 +71,15 @@ func (c *Bexs) GetMarketSummary(market string) (result GetMarketSummarieStruct, 
 		err = fmt.Errorf("Invalid input empty market")
 		return
 	}
-	response, err := c.GetURL("/api/v3/public/getmarketsummary?"+fmt.Sprintf("market=%s", market), false)
+
+	params := make(url.Values)
+	params.Add("market", market)
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/public/getmarketsummary?%s", params.Encode()), false)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -87,11 +96,17 @@ func (c *Bexs) GetOrderBook(market, kind string, depth int) (result OrderBookStr
 		err = fmt.Errorf("Invalid input empty market")
 		return
 	}
-	response, err := c.GetURL("/api/v3/public/getorderbook?"+fmt.Sprintf("market=%s&type=%s&depth=%v", market, kind, depth), false)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("type", kind)
+	params.Add("depth", fmt.Sprintf("%d", depth))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/public/getorderbook?%s", params.Encode()), false)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -108,11 +123,16 @@ func (c *Bexs) GetMarketHistory(market string, count int) (result []GetMarketHis
 		err = fmt.Errorf("Invalid input empty market")
 		return
 	}
-	response, err := c.GetURL("/api/v3/public/getmarkethistory?"+fmt.Sprintf("market=%s&count=%v", market, count), false)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("count", fmt.Sprintf("%d", count))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/public/getmarkethistory?%s", params.Encode()), false)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -129,11 +149,16 @@ func (c *Bexs) GetCandles(market, period string) (result []GetCandlesStruct, err
 		err = fmt.Errorf("Invalid input empty market")
 		return
 	}
-	response, err := c.GetURL("/api/v3/public/getcandles?"+fmt.Sprintf("market=%s&period=%s", market, period), false)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("period", period)
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/public/getcandles?%s", params.Encode()), false)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}

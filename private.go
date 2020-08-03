@@ -9,11 +9,11 @@ import (
 
 // Config -
 func (c *Bexs) Config() (result ConfigStruct, err error) {
-	response, err := c.GetURL("/api/v3/private/config?", true)
+	response, err := c.getURL("/api/v3/private/config?", true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -26,11 +26,11 @@ func (c *Bexs) Config() (result ConfigStruct, err error) {
 
 // GetBalances -
 func (c *Bexs) GetBalances() (result []GetBalanceStruct, err error) {
-	response, err := c.GetURL("/api/v3/private/getbalances?", true)
+	response, err := c.getURL("/api/v3/private/getbalances?", true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -47,12 +47,16 @@ func (c *Bexs) GetBalance(asset string) (result GetBalanceStruct, err error) {
 		err = fmt.Errorf("Invalid input asset %s", asset)
 		return
 	}
+
+	params := make(url.Values)
+	params.Add("asset", asset)
+
 	var tmp []GetBalanceStruct
-	response, err := c.GetURL("/api/v3/private/getbalance?"+fmt.Sprintf("asset=%s", asset), true)
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/getbalance?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -70,12 +74,17 @@ func (c *Bexs) BuyMarket(market string, quantity float64) (result string, err er
 		err = fmt.Errorf("Invalid input market %s quantity %f", market, quantity)
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/buymarket?"+fmt.Sprintf("market=%s&quantity=%.8f", market, quantity), true)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/buymarket?%s", params.Encode()), true)
 
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -93,12 +102,17 @@ func (c *Bexs) SellMarket(market string, quantity float64) (result string, err e
 		err = fmt.Errorf("Invalid input market %s quantity %f", market, quantity)
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/sellmarket?"+fmt.Sprintf("market=%s&quantity=%.8f", market, quantity), true)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/sellmarket?%s", params.Encode()), true)
 
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -116,12 +130,18 @@ func (c *Bexs) BuyLimit(market string, rate, quantity float64) (result string, e
 		err = fmt.Errorf("Invalid input market %s rate %f quantity %f", market, rate, quantity)
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/buylimit?"+fmt.Sprintf("market=%s&rate=%.8f&quantity=%.8f", market, rate, quantity), true)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("rate", fmt.Sprintf("%.8f", rate))
+	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/buylimit?%s", params.Encode()), true)
 
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -139,11 +159,17 @@ func (c *Bexs) SellLimit(market string, rate, quantity float64) (result string, 
 		err = fmt.Errorf("Invalid input market %s rate %f quantity %f", market, rate, quantity)
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/selllimit?"+fmt.Sprintf("market=%s&rate=%.8f&quantity=%.8f", market, rate, quantity), true)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("rate", fmt.Sprintf("%.8f", rate))
+	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/selllimit?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -164,12 +190,19 @@ func (c *Bexs) BuyAmi(market string, rate, quantity, amirate float64) (result st
 		err = fmt.Errorf("Invalid AMI rate %f amirate %f", rate, amirate)
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/buylimitami?"+fmt.Sprintf("market=%s&rate=%.8f&amirate=%.8f&quantity=%.8f", market, rate, amirate, quantity), true)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("rate", fmt.Sprintf("%.8f", rate))
+	params.Add("amirate", fmt.Sprintf("%.8f", amirate))
+	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/buylimitami?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
 
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -190,11 +223,18 @@ func (c *Bexs) SellAmi(market string, rate, quantity, amirate float64) (result s
 		err = fmt.Errorf("Invalid AMI rate %f amirate %f", rate, amirate)
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/selllimitami?"+fmt.Sprintf("market=%s&rate=%.8f&quantity=%.8f", market, rate, quantity), true)
+
+	params := make(url.Values)
+	params.Add("market", market)
+	params.Add("rate", fmt.Sprintf("%.8f", rate))
+	params.Add("amirate", fmt.Sprintf("%.8f", amirate))
+	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/selllimitami?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -211,11 +251,15 @@ func (c *Bexs) CancelOrder(orderID string) (result string, err error) {
 		err = errors.New("Invalid input empty orderid")
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/ordercancel?"+fmt.Sprintf("orderid=%s", orderID), true)
+
+	params := make(url.Values)
+	params.Add("orderid", orderID)
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/ordercancel?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -241,11 +285,11 @@ func (c *Bexs) CancelOrders(ordersID []int) (result string, err error) {
 		orders += fmt.Sprintf("orderids=%v&", a)
 	}
 
-	response, err := c.GetURL("/api/v3/private/cancelorders?"+orders[0:len(orders)-1], true)
+	response, err := c.getURL("/api/v3/private/cancelorders?"+orders[0:len(orders)-1], true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -263,11 +307,15 @@ func (c *Bexs) GetOpenOrders(market string) (result []GetOrdersStruct, err error
 		err = fmt.Errorf("Invalid input empty market")
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/getopenorders?"+fmt.Sprintf("market=%s", market), true)
+
+	params := make(url.Values)
+	params.Add("market", market)
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/getopenorders?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -284,12 +332,16 @@ func (c *Bexs) OrderStatus(orderID string) (result GetOrdersStruct, err error) {
 		err = fmt.Errorf("Invalid input empty order")
 		return
 	}
+
+	params := make(url.Values)
+	params.Add("orderid", orderID)
+
 	var tmp []GetOrdersStruct
-	response, err := c.GetURL("/api/v3/private/getorder?"+fmt.Sprintf("orderid=%s", orderID), true)
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/getorder?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -311,11 +363,16 @@ func (c *Bexs) GetDepositAddress(asset string) (result GetDepositAddressStruct, 
 		err = fmt.Errorf("Invalid input empty asset")
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/getdepositaddress?"+fmt.Sprintf("asset=%s", asset), true)
+
+	params := make(url.Values)
+	params.Add("asset", asset)
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/getdepositaddress?%s", params.Encode()), true)
+
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -328,11 +385,11 @@ func (c *Bexs) GetDepositAddress(asset string) (result GetDepositAddressStruct, 
 
 // GetDepositHistory -
 func (c *Bexs) GetDepositHistory() (result []GetHistoryStruct, err error) {
-	response, err := c.GetURL("/api/v3/private/getdeposithistory?", true)
+	response, err := c.getURL("/api/v3/private/getdeposithistory?", true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -345,11 +402,11 @@ func (c *Bexs) GetDepositHistory() (result []GetHistoryStruct, err error) {
 
 // GetWithdrawHistory -
 func (c *Bexs) GetWithdrawHistory() (result []GetHistoryStruct, err error) {
-	response, err := c.GetURL("/api/v3/private/getwithdrawhistory?", true)
+	response, err := c.getURL("/api/v3/private/getwithdrawhistory?", true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -366,11 +423,17 @@ func (c *Bexs) Withdraw(asset, address string, quantity float64) (result bool, e
 		err = fmt.Errorf("Invalid input")
 		return
 	}
-	response, err := c.GetURL("/api/v3/private/withdraw?"+fmt.Sprintf("asset=%s&address=%s&quantity=%.8f", asset, address, quantity), true)
+
+	params := make(url.Values)
+	params.Add("asset", asset)
+	params.Add("address", address)
+	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/withdraw?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -380,20 +443,23 @@ func (c *Bexs) Withdraw(asset, address string, quantity float64) (result bool, e
 
 // DirectTransfer -
 func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int) (result bool, err error) {
+
 	if asset == "" || to == "" || quantity <= 0 || exchange <= 0 {
 		err = fmt.Errorf("Invalid input asset %s to %s quantity %f exchange %v", asset, to, quantity, exchange)
 		return
 	}
 
 	params := make(url.Values)
+	params.Add("asset", asset)
 	params.Add("accountto", to)
-	toEncoded := params.Encode()
+	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+	params.Add("exchangeto", fmt.Sprintf("%d", exchange))
 
-	response, err := c.GetURL("/api/v3/private/directtransfer?"+fmt.Sprintf("asset=%s&accountto=%s&quantity=%.8f&exchangeto=%v", asset, toEncoded, quantity, exchange), true)
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/directtransfer?%s", params.Encode()), true)
 	if err != nil {
 		return
 	}
-	response, err = c.ParseResult(response)
+	response, err = c.parseResult(response)
 	if err != nil {
 		return
 	}

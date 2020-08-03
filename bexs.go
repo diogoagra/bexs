@@ -35,6 +35,7 @@ var exchanges = map[string]string{
 	"bullgain":       "https://trade.bullgain.com",
 	"comprarbitcoin": "https://app.comprarbitcoin.com.br",
 	"dev":            "https://dev.bleu.com.br",
+	"staging":        "https://staging.bleu.com.br",
 	"localhost":      "http://localhost",
 }
 
@@ -49,8 +50,8 @@ func New(exchange, apikey, apisecret string, debug bool) *Bexs {
 	}
 }
 
-// GetURL -
-func (c *Bexs) GetURL(endpoint string, private bool) (response []byte, err error) {
+// getURL -
+func (c *Bexs) getURL(endpoint string, private bool) (response []byte, err error) {
 	var uri, apisign string
 
 	if private {
@@ -110,8 +111,8 @@ func (c *Bexs) GetURL(endpoint string, private bool) (response []byte, err error
 	return
 }
 
-// ParseResult -
-func (c *Bexs) ParseResult(result []byte) (response []byte, err error) {
+// parseResult -
+func (c *Bexs) parseResult(result []byte) (response []byte, err error) {
 	var defaultReturn DefaultReturn
 	err = json.Unmarshal(result, &defaultReturn)
 	if err != nil {
