@@ -442,7 +442,7 @@ func (c *Bexs) Withdraw(asset, address string, quantity float64) (result bool, e
 }
 
 // DirectTransfer -
-func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int) (result bool, err error) {
+func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int, comments string) (result bool, err error) {
 
 	if asset == "" || to == "" || quantity <= 0 || exchange <= 0 {
 		err = fmt.Errorf("Invalid input asset %s to %s quantity %f exchange %v", asset, to, quantity, exchange)
@@ -452,6 +452,7 @@ func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int) 
 	params := make(url.Values)
 	params.Add("asset", asset)
 	params.Add("accountto", to)
+	params.Add("comments", comments)
 	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
 	params.Add("exchangeto", fmt.Sprintf("%d", exchange))
 
