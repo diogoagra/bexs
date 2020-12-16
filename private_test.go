@@ -26,12 +26,12 @@ func TestBexs_GetBalance(t *testing.T) {
 }
 
 func TestBexs_BuyMarket(t *testing.T) {
-	_, err := privateTest.BuyMarket("BTC_USDT", 1)
+	_, err := privateTest.BuyMarket("BTC_USDT", 1, "teste")
 	assert.NoError(t, err)
 }
 
 func TestBexs_SellMarket(t *testing.T) {
-	_, err := privateTest.SellMarket("BTC_USDT", 1)
+	_, err := privateTest.SellMarket("BTC_USDT", 1, "teste")
 	assert.NoError(t, err)
 
 }

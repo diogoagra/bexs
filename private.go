@@ -69,7 +69,7 @@ func (c *Bexs) GetBalance(asset string) (result GetBalanceStruct, err error) {
 }
 
 // BuyMarket - Send a buy market order
-func (c *Bexs) BuyMarket(market string, quantity float64) (result string, err error) {
+func (c *Bexs) BuyMarket(market string, quantity float64, comments string) (result string, err error) {
 	if market == "" || quantity <= 0 {
 		err = fmt.Errorf("Invalid input market %s quantity %f", market, quantity)
 		return
@@ -78,6 +78,7 @@ func (c *Bexs) BuyMarket(market string, quantity float64) (result string, err er
 	params := make(url.Values)
 	params.Add("market", market)
 	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+	params.Add("comments", comments)
 
 	response, err := c.getURL(fmt.Sprintf("/api/v3/private/buymarket?%s", params.Encode()), true)
 
@@ -97,7 +98,7 @@ func (c *Bexs) BuyMarket(market string, quantity float64) (result string, err er
 }
 
 // SellMarket - Send a sell market order
-func (c *Bexs) SellMarket(market string, quantity float64) (result string, err error) {
+func (c *Bexs) SellMarket(market string, quantity float64, comments string) (result string, err error) {
 	if market == "" || quantity <= 0 {
 		err = fmt.Errorf("Invalid input market %s quantity %f", market, quantity)
 		return
@@ -106,6 +107,7 @@ func (c *Bexs) SellMarket(market string, quantity float64) (result string, err e
 	params := make(url.Values)
 	params.Add("market", market)
 	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+	params.Add("comments", comments)
 
 	response, err := c.getURL(fmt.Sprintf("/api/v3/private/sellmarket?%s", params.Encode()), true)
 
