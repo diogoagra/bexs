@@ -92,7 +92,7 @@ func TestBexs_GetWithdrawHistory(t *testing.T) {
 }
 
 func TestBexs_Withdraw(t *testing.T) {
-	_, err := privateTest.Withdraw("BTC", "abcde12346", 1)
+	_, err := privateTest.Withdraw("BTC", "abcde12346", 1, "teste")
 	assert.Error(t, err, "Your Daily/Monthly limit has been exceeded. You need to submit the necessary documentation to increase yours limits.")
 }
 

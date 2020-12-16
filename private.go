@@ -418,7 +418,7 @@ func (c *Bexs) GetWithdrawHistory() (result []GetHistoryStruct, err error) {
 }
 
 // Withdraw -
-func (c *Bexs) Withdraw(asset, address string, quantity float64) (result bool, err error) {
+func (c *Bexs) Withdraw(asset, address string, quantity float64, comments string) (result bool, err error) {
 	if asset == "" || address == "" || quantity <= 0 {
 		err = fmt.Errorf("Invalid input")
 		return
@@ -428,6 +428,7 @@ func (c *Bexs) Withdraw(asset, address string, quantity float64) (result bool, e
 	params.Add("asset", asset)
 	params.Add("address", address)
 	params.Add("quantity", fmt.Sprintf("%.8f", quantity))
+	params.Add("comments", comments)
 
 	response, err := c.getURL(fmt.Sprintf("/api/v3/private/withdraw?%s", params.Encode()), true)
 	if err != nil {
