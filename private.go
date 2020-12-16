@@ -472,7 +472,7 @@ func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int, 
 }
 
 // Transactions -
-func (c *Bexs) Transactions() (result TransactionStructs, err error) {
+func (c *Bexs) Transactions() (result []TransactionStructs, err error) {
 	response, err := c.getURL("/api/v3/private/getmytransactions?", true)
 	if err != nil {
 		return
