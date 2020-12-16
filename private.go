@@ -470,3 +470,20 @@ func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int, 
 	result = true
 	return
 }
+
+// Transactions -
+func (c *Bexs) Transactions() (result TransactionStructs, err error) {
+	response, err := c.getURL("/api/v3/private/getmytransactions?", true)
+	if err != nil {
+		return
+	}
+	response, err = c.parseResult(response)
+	if err != nil {
+		return
+	}
+	err = json.Unmarshal(response, &result)
+	if err != nil {
+		return
+	}
+	return
+}

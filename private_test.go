@@ -1,12 +1,13 @@
 package bexs
 
 import (
+	"log"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-var privateTest = New("staging", "", "", true)
+var privateTest = New("staging", "3906bf33de2f9339c94ca12c7715268e", "88535ec4761bac4cf541efeb84e641c856f67e13", true)
 
 func TestBexs_Config(t *testing.T) {
 	_, err := privateTest.Config()
@@ -99,4 +100,10 @@ func TestBexs_Withdraw(t *testing.T) {
 func TestBexs_DirectTransfer(t *testing.T) {
 	_, err := privateTest.DirectTransfer("BTC", "teste@localhost", 1, 5, "")
 	assert.Error(t, err, "Your Daily/Monthly limit has been exceeded. You need to submit the necessary documentation to increase yours limits.")
+}
+
+func TestBexs_Transactions(t *testing.T) {
+	response, _ := privateTest.Transactions()
+	log.Println(response)
+
 }

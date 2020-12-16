@@ -172,3 +172,17 @@ type GetCandlesStruct struct {
 	Volume     decimal.Decimal `json:"Volume"`
 	BaseVolume decimal.Decimal `json:"BaseVolume"`
 }
+
+// TransactionStructs -
+type TransactionStructs struct {
+	ID          int     `json:"ID"`
+	TimeStamp   string  `json:"TimeStamp"`
+	Asset       string  `json:"Asset"`
+	AssetName   string  `json:"AssetName"`
+	Amount      float64 `json:"Amount"`
+	Type        string  `json:"Type"`
+	Description string  `json:"Description"`
+	Comments    string  `json:"Comments"`
+	CoinSymbol  string  `json:"CoinSymbol"`
+	CoinName    string  `json:"CoinName"`
+}
