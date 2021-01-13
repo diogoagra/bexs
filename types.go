@@ -1,6 +1,10 @@
 package bexs
 
-import "github.com/shopspring/decimal"
+import (
+	"time"
+
+	"github.com/shopspring/decimal"
+)
 
 // DefaultReturn -
 type DefaultReturn struct {
@@ -175,14 +179,21 @@ type GetCandlesStruct struct {
 
 // TransactionStructs -
 type TransactionStructs struct {
-	ID          int     `json:"ID"`
-	TimeStamp   string  `json:"TimeStamp"`
-	Asset       string  `json:"Asset"`
-	AssetName   string  `json:"AssetName"`
-	Amount      float64 `json:"Amount"`
-	Type        string  `json:"Type"`
-	Description string  `json:"Description"`
-	Comments    string  `json:"Comments"`
-	CoinSymbol  string  `json:"CoinSymbol"`
-	CoinName    string  `json:"CoinName"`
+	ID          int             `json:"ID"`
+	TimeStamp   string          `json:"TimeStamp"`
+	Asset       string          `json:"Asset"`
+	AssetName   string          `json:"AssetName"`
+	Amount      decimal.Decimal `json:"Amount"`
+	Type        string          `json:"Type"`
+	Description string          `json:"Description"`
+	Comments    string          `json:"Comments"`
+	CoinSymbol  string          `json:"CoinSymbol"`
+	CoinName    string          `json:"CoinName"`
+}
+
+// OrderDetails -
+type OrderDetails struct {
+	Quantity  decimal.Decimal `json:"quantity"`
+	Price     decimal.Decimal `json:"price"`
+	CreatedAt time.Time       `json:"createdAt"`
 }
