@@ -81,10 +81,10 @@ func (c *Bexs) BuyMarket(market string, quantity float64, comments string) (resu
 	params.Add("comments", comments)
 
 	response, err := c.getURL(fmt.Sprintf("/api/v3/private/buymarket?%s", params.Encode()), true)
-
 	if err != nil {
 		return
 	}
+
 	response, err = c.parseResult(response)
 	if err != nil {
 		return
@@ -110,10 +110,10 @@ func (c *Bexs) SellMarket(market string, quantity float64, comments string) (res
 	params.Add("comments", comments)
 
 	response, err := c.getURL(fmt.Sprintf("/api/v3/private/sellmarket?%s", params.Encode()), true)
-
 	if err != nil {
 		return
 	}
+
 	response, err = c.parseResult(response)
 	if err != nil {
 		return
@@ -485,5 +485,30 @@ func (c *Bexs) Transactions() (result []TransactionStructs, err error) {
 	if err != nil {
 		return
 	}
+	return
+}
+
+// OrderDetails -
+func (c *Bexs) OrderDetails(orderID string) (result []OrderDetails, err error) {
+	if orderID == "" {
+		err = fmt.Errorf("Invalid input empty order")
+		return
+	}
+
+	response, err := c.getURL(fmt.Sprintf("/api/v3/private/orders/%s/trades?", orderID), true)
+	if err != nil {
+		return
+	}
+
+	response, err = c.parseResult(response)
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal(response, &result)
+	if err != nil {
+		return
+	}
+
 	return
 }
