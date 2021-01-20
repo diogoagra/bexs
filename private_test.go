@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var privateTest = New("staging", "3906bf33de2f9339c94ca12c7715268e", "88535ec4761bac4cf541efeb84e641c856f67e13", true)
+var privateTest = New("staging", "", "", true)
 
 func TestBexs_Config(t *testing.T) {
 	_, err := privateTest.Config()
