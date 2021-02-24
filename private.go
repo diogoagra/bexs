@@ -274,7 +274,7 @@ func (c *Bexs) CancelOrder(orderID string) (result string, err error) {
 }
 
 // CancelOrders -
-func (c *Bexs) CancelOrders(ordersID []int) (result string, err error) {
+func (c *Bexs) CancelOrders(ordersID []int) (result interface{}, err error) {
 
 	if len(ordersID) == 0 {
 		err = errors.New("Invalid input empty orders")
