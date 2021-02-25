@@ -48,7 +48,7 @@ func TestBexs_SellLimit(t *testing.T) {
 }
 
 func TestBexs_BuyAmi(t *testing.T) {
-	_, err := privateTest.BuyAmi("BTC_USDT", 10000, 1, 11000)
+	_, err := privateTest.BuyAmi("BTC_USDT", 100, 1, 11000)
 	assert.NoError(t, err)
 
 }

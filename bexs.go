@@ -126,6 +126,9 @@ func (c *Bexs) parseResult(result []byte) (response []byte, err error) {
 	}
 
 	if !defaultReturn.Success {
+		if defaultReturn.Message == "" {
+			defaultReturn.Message = defaultReturn.Result.(string)
+		}
 		err = errors.New(defaultReturn.Message)
 		if c.Debug {
 			log.Println("[debug] error:", err)
