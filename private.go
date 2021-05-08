@@ -44,7 +44,7 @@ func (c *Bexs) GetBalances() (result []GetBalanceStruct, err error) {
 // GetBalance -
 func (c *Bexs) GetBalance(asset string) (result GetBalanceStruct, err error) {
 	if asset == "" {
-		err = fmt.Errorf("Invalid input asset %s", asset)
+		err = fmt.Errorf("invalid input asset %s", asset)
 		return
 	}
 
@@ -71,7 +71,7 @@ func (c *Bexs) GetBalance(asset string) (result GetBalanceStruct, err error) {
 // BuyMarket - Send a buy market order
 func (c *Bexs) BuyMarket(market string, quantity float64, comments string) (result string, err error) {
 	if market == "" || quantity <= 0 {
-		err = fmt.Errorf("Invalid input market %s quantity %f", market, quantity)
+		err = fmt.Errorf("invalid input market %s quantity %f", market, quantity)
 		return
 	}
 
@@ -100,7 +100,7 @@ func (c *Bexs) BuyMarket(market string, quantity float64, comments string) (resu
 // SellMarket - Send a sell market order
 func (c *Bexs) SellMarket(market string, quantity float64, comments string) (result string, err error) {
 	if market == "" || quantity <= 0 {
-		err = fmt.Errorf("Invalid input market %s quantity %f", market, quantity)
+		err = fmt.Errorf("invalid input market %s quantity %f", market, quantity)
 		return
 	}
 
@@ -129,7 +129,7 @@ func (c *Bexs) SellMarket(market string, quantity float64, comments string) (res
 // BuyLimit - Send a buy limit order
 func (c *Bexs) BuyLimit(market string, rate, quantity float64) (result string, err error) {
 	if market == "" || rate <= 0 || quantity <= 0 {
-		err = fmt.Errorf("Invalid input market %s rate %f quantity %f", market, rate, quantity)
+		err = fmt.Errorf("invalid input market %s rate %f quantity %f", market, rate, quantity)
 		return
 	}
 
@@ -158,7 +158,7 @@ func (c *Bexs) BuyLimit(market string, rate, quantity float64) (result string, e
 // SellLimit - Send a sell limit order
 func (c *Bexs) SellLimit(market string, rate, quantity float64) (result string, err error) {
 	if market == "" || rate <= 0 || quantity <= 0 {
-		err = fmt.Errorf("Invalid input market %s rate %f quantity %f", market, rate, quantity)
+		err = fmt.Errorf("invalid input market %s rate %f quantity %f", market, rate, quantity)
 		return
 	}
 
@@ -185,11 +185,11 @@ func (c *Bexs) SellLimit(market string, rate, quantity float64) (result string, 
 // BuyAmi - Send ami buy order, must have amirate > rate
 func (c *Bexs) BuyAmi(market string, rate, quantity, amirate float64) (result string, err error) {
 	if market == "" || rate <= 0 || quantity <= 0 || amirate <= 0 {
-		err = fmt.Errorf("Invalid input market %s rate %f quantity %f amirate %f", market, rate, quantity, amirate)
+		err = fmt.Errorf("invalid input market %s rate %f quantity %f amirate %f", market, rate, quantity, amirate)
 		return
 	}
 	if rate > amirate {
-		err = fmt.Errorf("Invalid AMI rate %f amirate %f", rate, amirate)
+		err = fmt.Errorf("invalid AMI rate %f amirate %f", rate, amirate)
 		return
 	}
 
@@ -218,11 +218,11 @@ func (c *Bexs) BuyAmi(market string, rate, quantity, amirate float64) (result st
 // SellAmi - Send ami sell order, must have rate > amirate
 func (c *Bexs) SellAmi(market string, rate, quantity, amirate float64) (result string, err error) {
 	if market == "" || rate <= 0 || quantity <= 0 || amirate <= 0 {
-		err = fmt.Errorf("Invalid input market %s rate %f quantity %f ami rate %f", market, rate, quantity, amirate)
+		err = fmt.Errorf("invalid input market %s rate %f quantity %f ami rate %f", market, rate, quantity, amirate)
 		return
 	}
 	if amirate > rate {
-		err = fmt.Errorf("Invalid AMI rate %f amirate %f", rate, amirate)
+		err = fmt.Errorf("invalid AMI rate %f amirate %f", rate, amirate)
 		return
 	}
 
@@ -250,7 +250,7 @@ func (c *Bexs) SellAmi(market string, rate, quantity, amirate float64) (result s
 // CancelOrder -
 func (c *Bexs) CancelOrder(orderID string) (result string, err error) {
 	if orderID == "" {
-		err = errors.New("Invalid input empty orderid")
+		err = errors.New("invalid input empty orderid")
 		return
 	}
 
@@ -277,7 +277,7 @@ func (c *Bexs) CancelOrder(orderID string) (result string, err error) {
 func (c *Bexs) CancelOrders(ordersID []int) (result interface{}, err error) {
 
 	if len(ordersID) == 0 {
-		err = errors.New("Invalid input empty orders")
+		err = errors.New("invalid input empty orders")
 		return
 	}
 
@@ -306,7 +306,7 @@ func (c *Bexs) CancelOrders(ordersID []int) (result interface{}, err error) {
 // GetOpenOrders -
 func (c *Bexs) GetOpenOrders(market string) (result []GetOrdersStruct, err error) {
 	if market == "" {
-		err = fmt.Errorf("Invalid input empty market")
+		err = fmt.Errorf("invalid input empty market")
 		return
 	}
 
@@ -331,7 +331,7 @@ func (c *Bexs) GetOpenOrders(market string) (result []GetOrdersStruct, err error
 // OrderStatus -
 func (c *Bexs) OrderStatus(orderID string) (result GetOrdersStruct, err error) {
 	if orderID == "" {
-		err = fmt.Errorf("Invalid input empty order")
+		err = fmt.Errorf("invalid input empty order")
 		return
 	}
 
@@ -362,7 +362,7 @@ func (c *Bexs) OrderStatus(orderID string) (result GetOrdersStruct, err error) {
 // GetDepositAddress -
 func (c *Bexs) GetDepositAddress(asset string) (result GetDepositAddressStruct, err error) {
 	if asset == "" {
-		err = fmt.Errorf("Invalid input empty asset")
+		err = fmt.Errorf("invalid input empty asset")
 		return
 	}
 
@@ -422,7 +422,7 @@ func (c *Bexs) GetWithdrawHistory() (result []GetHistoryStruct, err error) {
 // Withdraw -
 func (c *Bexs) Withdraw(asset, address string, quantity float64, comments string) (result bool, err error) {
 	if asset == "" || address == "" || quantity <= 0 {
-		err = fmt.Errorf("Invalid input")
+		err = fmt.Errorf("invalid input")
 		return
 	}
 
@@ -436,7 +436,7 @@ func (c *Bexs) Withdraw(asset, address string, quantity float64, comments string
 	if err != nil {
 		return
 	}
-	response, err = c.parseResult(response)
+	_, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -448,7 +448,7 @@ func (c *Bexs) Withdraw(asset, address string, quantity float64, comments string
 func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int, comments string) (result bool, err error) {
 
 	if asset == "" || to == "" || quantity <= 0 || exchange <= 0 {
-		err = fmt.Errorf("Invalid input asset %s to %s quantity %f exchange %v", asset, to, quantity, exchange)
+		err = fmt.Errorf("invalid input asset %s to %s quantity %f exchange %v", asset, to, quantity, exchange)
 		return
 	}
 
@@ -463,7 +463,7 @@ func (c *Bexs) DirectTransfer(asset, to string, quantity float64, exchange int, 
 	if err != nil {
 		return
 	}
-	response, err = c.parseResult(response)
+	_, err = c.parseResult(response)
 	if err != nil {
 		return
 	}
@@ -491,7 +491,7 @@ func (c *Bexs) Transactions() (result []TransactionStructs, err error) {
 // OrderDetails -
 func (c *Bexs) OrderDetails(orderID string) (result []OrderDetails, err error) {
 	if orderID == "" {
-		err = fmt.Errorf("Invalid input empty order")
+		err = fmt.Errorf("invalid input empty order")
 		return
 	}
 

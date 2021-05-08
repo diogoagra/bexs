@@ -34,6 +34,8 @@ var exchanges = map[string]string{
 	"dev":            "https://dev.bleu.com.br",
 	"staging":        "https://staging.bleu.com.br",
 	"bitcambio":      "https://nova.bitcambio.com.br",
+	"america":        "panel.americaexchange.com.br",
+	"nfxtrade":       "exchange.nfxtrade.com",
 }
 
 // New - Exchanges avaliable (bleutrade, exccripto, bitrecife, bomesp, bomespg, bullgain)
@@ -104,7 +106,7 @@ func (c *Bexs) getURL(endpoint string, private bool) (response []byte, err error
 		return
 	}
 	if resp.StatusCode != 200 {
-		err = fmt.Errorf("Status code %v - %s", resp.StatusCode, uri)
+		err = fmt.Errorf("status code %v - %s", resp.StatusCode, uri)
 		if c.Debug {
 			log.Println("[debug] error:", err)
 		}
