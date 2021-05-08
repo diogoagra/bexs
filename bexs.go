@@ -34,8 +34,8 @@ var exchanges = map[string]string{
 	"dev":            "https://dev.bleu.com.br",
 	"staging":        "https://staging.bleu.com.br",
 	"bitcambio":      "https://nova.bitcambio.com.br",
-	"america":        "panel.americaexchange.com.br",
-	"nfxtrade":       "exchange.nfxtrade.com",
+	"america":        "https://panel.americaexchange.com.br",
+	"nfxtrade":       "https://exchange.nfxtrade.com",
 }
 
 // New - Exchanges avaliable (bleutrade, exccripto, bitrecife, bomesp, bomespg, bullgain)
