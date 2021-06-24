@@ -76,6 +76,10 @@ func (c *Bexs) getURL(endpoint string, private bool) (response []byte, err error
 		log.Println("[debug] request:", uri)
 	}
 
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
+
 	req, err := http.NewRequest("GET", uri, nil)
 	if err != nil {
 		if c.Debug {
@@ -90,7 +94,7 @@ func (c *Bexs) getURL(endpoint string, private bool) (response []byte, err error
 		req.Header.Set("apisign", apisign)
 	}
 
-	resp, err := http.DefaultClient.Do(req)
+	resp, err := client.Do(req)
 	if err != nil {
 		if c.Debug {
 			log.Println("[debug] error:", err)
